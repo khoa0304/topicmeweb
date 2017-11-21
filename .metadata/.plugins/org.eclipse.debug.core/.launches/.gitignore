@@ -1,0 +1,23 @@
+/BasicSearch.launch
+/BasicSearch.test1.launch
+/HighlighterTest.launch
+/IndexTest (1).launch
+/IndexTest.launch
+/IndexTest.testBasicIndex.launch
+/PDFBoxTest.launch
+/PDFBoxTest.parsePdfTest1.launch
+/ParsePDFToTextFileTest.launch
+/SearchTest (1).launch
+/SearchTest.launch
+/SearchTest.testBasicSearch.launch
+/SearchTest.testQueryHighlighter.launch
+/SentDimensionKeysIndexTest.launch
+/TestDocument.launch
+/TikaPdfParser.launch
+/Tomcat v8.0 Server at localhost.launch
+/TopicMeWeb.launch
+/WebParserTest.launch
+/WebParserTest.test1.launch
+/WebParserTest.test2.launch
+/WebParserTest.test3.launch
+/WebParserTest.testInsertCollection.launch
