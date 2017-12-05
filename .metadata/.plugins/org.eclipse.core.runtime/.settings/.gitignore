@@ -43,3 +43,5 @@
 /org.tigris.subversion.subclipse.tools.usage.prefs
 /org.tigris.subversion.subclipse.ui.prefs
 /org.eclipse.ui.views.log.prefs
+/org.eclipse.pde.core.prefs
+/org.eclipse.wst.jsdt.debug.core.prefs

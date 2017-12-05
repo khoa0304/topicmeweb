@@ -1,2 +1,5 @@
 /TopicMe.container
 /TopicMeWeb.container
+/TopicMeCore.container
+/TopicMeLab.container
+/TopicMeSolr.container

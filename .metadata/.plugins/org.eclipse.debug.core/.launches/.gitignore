@@ -21,3 +21,12 @@
 /WebParserTest.test2.launch
 /WebParserTest.test3.launch
 /WebParserTest.testInsertCollection.launch
+/HtmlParserServiceTest.launch
+/HtmlParserServiceTest.test2.launch
+/MainControllerTest.launch
+/MainControllerTest.testAddLink (1).launch
+/MainControllerTest.testAddLink.launch
+/MongdbUtilTest.test1.launch
+/WebPageRespositoryTest.launch
+/WebPageRespositoryTest.test1.launch
+/WebPageRespositoryTest.testDeleteDocument.launch

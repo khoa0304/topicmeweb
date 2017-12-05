@@ -14,7 +14,7 @@ import com.topicme.web.security.config.LoginSecurityConfig;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({ "com.topicme.web.security.config","com.topicme.web.controller" })
+//@ComponentScan({"com.topicme.web.security.config","com.topicme.web.controller" })
 @Import(value = { LoginSecurityConfig.class })
 public class LoginApplicationConfig {
 
