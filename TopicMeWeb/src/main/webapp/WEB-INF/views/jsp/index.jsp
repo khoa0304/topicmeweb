@@ -150,9 +150,9 @@ input[type=submit]:hover {
 		<div id="mySidenav" class="column left sidenav"
 			style="background-color: #D3D3D3;">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a href="./Kafka" onclick="closeNav()">Kafka</a> 
-			<a href="./Java" onclick="closeNav()">Java</a> 
-			<a href="./Mongodb" onclick="closeNav()">Mongodb</a>
+			<a href="${pageContext.request.contextPath}/index/Kafka" onclick="closeNav()">Kafka</a> 
+			<a href="${pageContext.request.contextPath}/index/Java" onclick="closeNav()">Java</a> 
+			<a href="${pageContext.request.contextPath}/index/Mongodb" onclick="closeNav()">Mongodb</a>
 		</div>
 
 		<div class="column right" style="background-color: #FFFFFF;">

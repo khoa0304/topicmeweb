@@ -38,7 +38,7 @@ public class SolrDocumentSearchDao {
 	public Collection<SolrDocument>  searchByHtmlContent(String searchString){
 		
 		SolrQuery query = new SolrQuery();
-		query.set("q", "notes_ngram:"+searchString);
+		query.set("q", "notes_ngram:"+searchString );
 		
 		QueryResponse response;
 		SolrDocumentList docList = new SolrDocumentList();

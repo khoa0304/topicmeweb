@@ -21,7 +21,7 @@ public class HtmlContentSearchService {
 	private Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	public enum SEARCH_FIELDS {
-		HTML_TITLE
+		HTML_TITLE,NOTES
 	}
 	
 	
@@ -42,8 +42,12 @@ public class HtmlContentSearchService {
 		for(SolrDocument solrDocument : results){
 			
 			PageSearchResultDomain pageSearchResultDomain =  new PageSearchResultDomain();
+			String notes = (String) solrDocument.getFieldValue(SEARCH_FIELDS.NOTES.name());
+			pageSearchResultDomain.setNotes(notes);
+			
 			String title = (String) solrDocument.getFieldValue(SEARCH_FIELDS.HTML_TITLE.name());
 			pageSearchResultDomain.setTitle(title);
+			
 			list.add(pageSearchResultDomain);
 		}
 		return list;

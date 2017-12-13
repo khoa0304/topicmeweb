@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.xml.sax.SAXException;
@@ -28,6 +30,7 @@ import com.topicme.html.parser.HtmlParserService;
 import com.topicme.mongodb.collection.model.PageSearchResultDomain;
 import com.topicme.search.service.HtmlContentSearchService;
 import com.topicme.web.model.LinkAndNotes;
+import com.topicme.web.model.SearchInputs;
 
 @Controller
 public class MainController {
@@ -49,38 +52,24 @@ public class MainController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String searchPage(ModelMap model) {
 
-		model.addAttribute("message", "Spring 3 MVC Hello World");
+		model.addAttribute(new SearchInputs());
 		return "search";
 
 	}
 	
-	@RequestMapping(value = "/lab", method = RequestMethod.GET)
-	public String labPage() {
-		
-		return "lab";
-
-	}
-	
-	
-	@RequestMapping(value = "/search/q={query}", method = RequestMethod.GET)
-	public ModelAndView searchPage(@PathVariable("query") String query,HttpServletRequest request) {
+	@ResponseBody
+	@RequestMapping(value = "/q={query}", method = RequestMethod.GET)
+	public List<PageSearchResultDomain>
+				searchPage(@PathVariable("query") String query,HttpServletRequest request,ModelMap model) {
 		
 		List<PageSearchResultDomain> results = htmlContentSearchService.searchPage(query);
-	
-		ModelAndView model = new ModelAndView("search");
-		model.addObject("pages", results);
-		
-		return model;
-
+		return results;
 	}
 	
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String indexPage(@ModelAttribute("linkAndNotes") LinkAndNotes linkAndNotes,ModelMap model) {
-		
-		//Page<WebPage> pages  = webPageRespository.findByCustomQuery("Spring", PageRequest.of(0, 10 ,Sort.Direction.DESC, "title"));
 		return "index";
-
 	}
 	
 	@RequestMapping(value = "/index/{topic:.+}", method = RequestMethod.GET)
@@ -93,19 +82,13 @@ public class MainController {
 		model.addObject("topic", topic);
 
 		return model;
-	
-
 	}
 	
 	
 	@RequestMapping(value = "/index/addTopic", method = RequestMethod.POST)
-	public String addLink(@ModelAttribute("linkAndNotes") LinkAndNotes linkAndNotes,
-//			BindingResult result, 
-//			Model model,
-//			final RedirectAttributes redirectAttributes,
-//			HttpServletRequest req,
-			SessionStatus status
-			) {
+	public String addLink(
+			@ModelAttribute("linkAndNotes") LinkAndNotes linkAndNotes,
+			SessionStatus status) {
 		
 		String link = linkAndNotes.getLink();
 		String notes = linkAndNotes.getNotes();
@@ -124,19 +107,14 @@ public class MainController {
         return "redirect:/index/"+topic;
 	}
 
-	@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
-	public ModelAndView hello(@PathVariable("name") String name) {
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-	    User principal = (User) auth.getPrincipal();
-	      
-		ModelAndView model = new ModelAndView();
-		model.setViewName("hello");
-		model.addObject("name", principal.getUsername());
-
-		return model;
-
+	
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String searchString(@ModelAttribute("searchInputs") SearchInputs searchInputs ,@RequestParam("query") String searchString,ModelMap model) {
+		
+		model.addAttribute(new SearchInputs());
+		
+		return "results";
 	}
 
 }
