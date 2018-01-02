@@ -84,7 +84,7 @@ body {
 }
 
 input[type=text], select, textarea{
-    width: 100%;
+    width: 75%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -104,7 +104,7 @@ input[type=submit] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    float: right;
+    float: left;
 }
 
 input[type=submit]:hover {
@@ -172,12 +172,19 @@ input[type=submit]:hover {
 						<label for="notes">Notes</label>
 					</div>
 					<div class="col-75">
-						<form:textarea id="notes" path="notes" name="notes" placeholder="Write quick notes.." style="height: 100px"></form:textarea>
+						<form:textarea id="notes" path="notes" name="notes" placeholder="Write quick notes.." style="height: 70px"></form:textarea>
 						<form:input type="hidden" path="topic" name="topic" value="${topic}"/>
 					</div>
 				</div>
 				<div class="row">
-					<input type="submit" value="Submit"/>
+					<div class="col-25">
+					</div>
+					<div class="col-75">
+						<form:input  type="submit" path="postAnswer" value="Post Notes"/>
+						<form:input  type="submit" path="postReview" value="Post Review"/>
+						<form:input  type="submit" path="postComment" value="Post Comment"/>
+					</div>
+					
 				</div>
 			</form:form>
 		</div>

@@ -12,7 +12,9 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.tika.exception.TikaException;
-import org.apache.tika.language.LanguageIdentifier;
+import org.apache.tika.langdetect.OptimaizeLangDetector;
+import org.apache.tika.language.detect.LanguageDetector;
+import org.apache.tika.language.detect.LanguageResult;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
@@ -31,7 +33,6 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.topicme.solr.common.HtmlDocumentFields.HTML_PARSED_OPTIONS;
 import com.topicme.solr.dao.SolrDocumentInsertDao;
-
 
 @Service
 public class HtmlParserService {
@@ -112,21 +113,23 @@ public class HtmlParserService {
 		Parser parser = new AutoDetectParser();
 		parser.parse(input, teeHandler, metadata, parseContext);
 		
-		String htmlTextContent = textHandler.toString().replaceAll("(\n)+", "\n");;
+		String htmlTextContent = textHandler.toString().replaceAll("(\n)+", "\n");
+		
 		map.put(HTML_PARSED_OPTIONS.HTML_TITLE, metadata.get(TITLE));
 		map.put(HTML_PARSED_OPTIONS.HTML_METADATA_DESCRIPTION, metadata.get(DESCRIPTION));
 		map.put(HTML_PARSED_OPTIONS.HTML_TEXT_CONTENT,htmlTextContent);
 		map.put(HTML_PARSED_OPTIONS.HTML_CONTENT, toHTMLHandler.toString());
 		
-		LOGGER.info(htmlTextContent);
+		LOGGER.info(identifyLanguage(metadata.get(TITLE)));
 		
 		return map;
 		
 	}
 	
 	
-	public String identifyLanguage(String text) {
-	    LanguageIdentifier identifier = new LanguageIdentifier(text);
-	    return identifier.getLanguage();
+	public String identifyLanguage(String text) throws IOException {
+		LanguageDetector detector = new OptimaizeLangDetector().loadModels();
+        LanguageResult result = detector.detect(text);
+        return result.getLanguage();
 	}
 }

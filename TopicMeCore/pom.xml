@@ -75,6 +75,14 @@
 			<artifactId>tika-core</artifactId>
 			<version>1.16</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.tika/tika-langdetect -->
+		<dependency>
+		    <groupId>org.apache.tika</groupId>
+		    <artifactId>tika-langdetect</artifactId>
+		    <version>1.15</version>
+		</dependency>
+		
 	
 		<dependency>
 			<groupId>org.apache.opennlp</groupId>

@@ -1,7 +1,9 @@
 package com.topicme.web.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +13,6 @@ import org.apache.tika.exception.TikaException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +28,8 @@ import org.xml.sax.SAXException;
 import com.topicme.html.parser.HtmlParserService;
 import com.topicme.mongodb.collection.model.PageSearchResultDomain;
 import com.topicme.search.service.HtmlContentSearchService;
+import com.topicme.solr.common.HtmlDocumentFields.HTML_PARSED_OPTIONS;
+import com.topicme.solr.model.WebPageModel;
 import com.topicme.web.model.LinkAndNotes;
 import com.topicme.web.model.SearchInputs;
 
@@ -98,7 +99,7 @@ public class MainController {
 		
 		try {
 		
-			htmlParserService.parseAndIndexLink(link,notes);
+			Map<HTML_PARSED_OPTIONS,String> parsedContentMap = htmlParserService.parseAndIndexLink(link,notes);
 		
 		} catch (IOException | SAXException | TikaException | SolrServerException e) {
 			LOGGER.error("",e);
@@ -110,11 +111,25 @@ public class MainController {
 	
 	
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String searchString(@ModelAttribute("searchInputs") SearchInputs searchInputs ,@RequestParam("query") String searchString,ModelMap model) {
+	public ModelAndView searchString(@ModelAttribute("searchInputs") SearchInputs searchInputs ,@RequestParam("query") String searchString,ModelAndView model) {
 		
-		model.addAttribute(new SearchInputs());
+		model.setViewName("results");
+		model.addObject(new SearchInputs());
+		List<WebPageModel> pageList = new ArrayList<>();
+		WebPageModel webPageModel = new WebPageModel();
 		
-		return "results";
+		webPageModel.setTitle("Khoa Tran");
+		
+		WebPageModel webPageModel2 = new WebPageModel();
+		
+		webPageModel2.setTitle("Vicky Hoang");
+		
+		pageList.add(webPageModel);
+		pageList.add(webPageModel2);
+		
+		model.addObject("pages",pageList);
+		
+		return model;
 	}
 
 }
